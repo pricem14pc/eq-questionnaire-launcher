@@ -1,7 +1,7 @@
 # Start from golang v1.8 base image
 FROM golang:1.8 as builder
 
-WORKDIR /go/src/github.com/ONSdigital/go-launch-a-survey
+WORKDIR /go/src/github.com/ONSdigital/eq-questionnaire-launcher
 
 COPY . .
 
@@ -10,7 +10,7 @@ RUN go get -u github.com/golang/dep/cmd/dep
 RUN $GOPATH/bin/dep ensure
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/go-launch-a-survey .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/eq-questionnaire-launcher .
 
 ######## Start a new stage from scratch #######
 FROM alpine:latest  
@@ -21,7 +21,7 @@ RUN apk --no-cache update && \
     rm -rf /var/cache/apk/*
 
 # Copy the Pre-built binary file and entry point from the previous stage
-COPY --from=builder /go/bin/go-launch-a-survey .
+COPY --from=builder /go/bin/eq-questionnaire-launcher .
 COPY docker-entrypoint.sh .
 COPY static/ /static/
 COPY templates/ /templates/

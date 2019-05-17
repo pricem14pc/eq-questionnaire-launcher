@@ -1,4 +1,4 @@
-package main // import "github.com/ONSdigital/go-launch-a-survey"
+package main // import "github.com/ONSdigital/eq-questionnaire-launcher"
 
 import (
 	"fmt"
@@ -12,9 +12,9 @@ import (
 
 	"html"
 
-	"github.com/ONSdigital/go-launch-a-survey/authentication"
-	"github.com/ONSdigital/go-launch-a-survey/settings"
-	"github.com/ONSdigital/go-launch-a-survey/surveys"
+	"github.com/ONSdigital/eq-questionnaire-launcher/authentication"
+	"github.com/ONSdigital/eq-questionnaire-launcher/settings"
+	"github.com/ONSdigital/eq-questionnaire-launcher/surveys"
 	"github.com/gorilla/mux"
 	"github.com/satori/go.uuid"
 	"gopkg.in/square/go-jose.v2/json"

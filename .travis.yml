@@ -16,9 +16,9 @@ script:
   - go get -t ./...
   - CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo
   - export TAG=`if [ "$TRAVIS_PULL_REQUEST_BRANCH" == "" ]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
-  - docker build -t onsdigital/go-launch-a-survey:$TAG .
+  - docker build -t onsdigital/eq-questionnaire-launcher:$TAG .
   - echo "Pushing with tag [$TAG]"
-  - docker push onsdigital/go-launch-a-survey:$TAG
+  - docker push onsdigital/eq-questionnaire-launcher:$TAG
 
 branches:
   only:
