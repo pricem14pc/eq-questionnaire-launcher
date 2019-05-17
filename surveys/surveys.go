@@ -6,12 +6,12 @@ import (
 		"regexp"
 
 	"github.com/AreaHQ/jsonhal"
-	"github.com/ONSdigital/go-launch-a-survey/settings"
+	"github.com/ONSdigital/eq-questionnaire-launcher/settings"
 	"fmt"
 	"io/ioutil"
 	"strings"
 	"sort"
-	"github.com/ONSdigital/go-launch-a-survey/clients"
+	"github.com/ONSdigital/eq-questionnaire-launcher/clients"
 )
 
 // LauncherSchema is a representation of a schema in the Launcher

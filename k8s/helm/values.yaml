@@ -5,7 +5,7 @@
 replicaCount: 3
 
 image:
-  repository: eu.gcr.io/census-eq-ci/go-launch-a-survey
+  repository: eu.gcr.io/census-eq-ci/eq-questionnaire-launcher
   tag: latest
   pullPolicy: Always
 
