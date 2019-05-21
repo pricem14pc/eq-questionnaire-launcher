@@ -1,4 +1,6 @@
-# Alpha: Go Launch a Survey!
+# EQ Launcher
+
+This project was copied from https://github.com/ONSdigital/go-launch-a-survey and should be used for v3 of runner.
 
 ### Building and Running
 Install Go and ensure that your `GOPATH` env variable is set (usually it's `~/go`).
