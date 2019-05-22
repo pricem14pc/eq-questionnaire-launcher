@@ -1,7 +1,7 @@
 language: go
 
 go:
-  - 1.9
+  - 1.12.x
 
 services:
   - docker
@@ -12,13 +12,13 @@ install:
 script:
   - go get -u github.com/golang/dep/cmd/dep
   - dep ensure
-  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - go get -t ./...
   - CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo
-  - export TAG=`if [ "$TRAVIS_PULL_REQUEST_BRANCH" == "" ]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
-  - docker build -t onsdigital/eq-questionnaire-launcher:$TAG .
+  - export TAG="${TRAVIS_PULL_REQUEST_BRANCH:-latest}"
+  - docker build -t eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:"$TAG" .
+  - echo "$DOCKER_GCR_PASSWORD" | base64 --decode | docker login -u "$DOCKER_GCR_USERNAME" --password-stdin https://eu.gcr.io
   - echo "Pushing with tag [$TAG]"
-  - docker push onsdigital/eq-questionnaire-launcher:$TAG
+  - docker push eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:"$TAG"
 
 branches:
   only:
