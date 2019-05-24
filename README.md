@@ -31,13 +31,13 @@ docker build -t eq-questionnaire-launcher:latest .
 You can then run the image using `SURVEY_RUNNER_SCHEMA_URL` to point it at an instance of survey runner. 
 
 ```
-docker run -e SURVEY_RUNNER_SCHEMA_URL=http://localhost:5000 -it -p 8000:8000 eq-questionnaire-launcher:latest
+docker run -e SURVEY_RUNNER_SCHEMA_URL=http://localhost:5000 -it -p 8000:8000 eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:latest
 ```
 
 The syntax for this will be slightly different on Mac
 
 ```
-docker run -e SURVEY_RUNNER_SCHEMA_URL=http://docker.for.mac.host.internal:5000 -it -p 8000:8000 eq-questionnaire-launcher:latest
+docker run -e SURVEY_RUNNER_SCHEMA_URL=http://docker.for.mac.host.internal:5000 -it -p 8000:8000 eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:latest
 ```
 
 You should then be able to access go launcher at `localhost:8000`
