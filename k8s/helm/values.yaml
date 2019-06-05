@@ -17,7 +17,3 @@ service:
 
 ingress:
   enabled: true
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: launcher
-  tls:
-    - secretName: tls-cert
