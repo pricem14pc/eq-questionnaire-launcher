@@ -2,14 +2,13 @@
 
 set -e
 
-if [[ -z "$1" ]]; then
+if [[ -z "$RUNNER_URL" ]]; then
   echo "RUNNER_URL is mandatory"
   exit 1
 fi
 
-RUNNER_URL=$1
-DOCKER_REGISTRY="${2:-eu.gcr.io/census-eq-ci}"
-IMAGE_TAG="${3:-latest}"
+DOCKER_REGISTRY="${DOCKER_REGISTRY:-eu.gcr.io/census-eq-ci}"
+IMAGE_TAG="${IMAGE_TAG:-latest}"
 
 helm tiller run \
     helm upgrade --install \

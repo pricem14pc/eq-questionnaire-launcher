@@ -74,14 +74,21 @@ You need to have Helm installed locally
 
 1. Install Helm Tiller plugin for tillerless deploys `helm plugin install https://github.com/rimusz/helm-tiller`
 
+---
+
+The following environment variables can be set when deploying the app.
+- RUNNER_URL
+- DOCKER_REGISTRY *(optional)*
+- IMAGE_TAG *(optional)*
+
 To deploy to a cluster you can run the following command
 
 ```
-./k8s/deploy_app.sh <RUNNER_URL> <DOCKER_REGISTRY> <IMAGE_TAG>
+./k8s/deploy_app.sh
 ```
 ##### Example
  ```
-./k8s/deploy_app.sh https://example.com  eu.gcr.io/census-eq-dev v1.0.0
+RUNNER_URL=https://example.com ./k8s/deploy_app.sh
 ```
 
 ### Notes
