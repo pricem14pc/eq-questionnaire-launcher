@@ -23,5 +23,5 @@ resources:
     cpu: "0.25"
     memory: "128Mi"
   requests:
-    cpu: "250"
+    cpu: "250m"
     memory: "128Mi"
