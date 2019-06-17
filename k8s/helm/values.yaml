@@ -17,3 +17,11 @@ service:
 
 ingress:
   enabled: true
+
+resources:
+  limits:
+    cpu: "0.5"
+    memory: "256Mi"
+  requests:
+    cpu: "500m"
+    memory: "256Mi"
