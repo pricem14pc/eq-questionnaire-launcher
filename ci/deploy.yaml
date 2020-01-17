@@ -1,0 +1,40 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: theorf/google-cloud-sdk-helm
+params:
+  GOOGLE_APPLICATION_CREDENTIALS: /root/gcloud-service-key.json
+  SERVICE_ACCOUNT_JSON: ((gcp.service_account_json))
+  RUNNER_URL:
+  DOCKER_REGISTRY:
+  IMAGE_TAG:
+  REGION:
+  PROJECT_NAME:
+inputs:
+  - name: eq-questionnaire-launcher
+run:
+  path: bash
+  args:
+    - -exc
+    - |
+      apt-get install -y procps
+
+      cat >$GOOGLE_APPLICATION_CREDENTIALS <<EOL
+      $SERVICE_ACCOUNT_JSON
+      EOL
+
+      gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+
+      cd eq-questionnaire-launcher
+
+      helm init --client-only
+      helm plugin install https://github.com/rimusz/helm-tiller
+
+      PROJECT_ID=($(gcloud projects list --filter=name=${PROJECT_NAME} --format="value(PROJECT_ID)"))
+
+      [[ "${#PROJECT_ID[@]}" = 1 ]] || exit 1
+
+      gcloud container clusters get-credentials survey-runner --region ${REGION} --project ${PROJECT_ID}
+
+      DOCKER_REGISTRY="$DOCKER_REGISTRY" IMAGE_TAG="$IMAGE_TAG" RUNNER_URL="$RUNNER_URL" ./k8s/deploy_app.sh
