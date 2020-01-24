@@ -12,7 +12,7 @@ params:
   REGION:
   PROJECT_NAME:
 inputs:
-  - name: eq-questionnaire-launcher
+  - name: eq-questionnaire-launcher-repo
 run:
   path: bash
   args:
@@ -26,7 +26,7 @@ run:
 
       gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
 
-      cd eq-questionnaire-launcher
+      cd eq-questionnaire-launcher-repo
 
       helm init --client-only
       helm plugin install https://github.com/rimusz/helm-tiller
