@@ -24,17 +24,12 @@ run:
       $SERVICE_ACCOUNT_JSON
       EOL
 
-      gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
-
       cd eq-questionnaire-launcher-repo
 
       helm init --client-only
       helm plugin install https://github.com/rimusz/helm-tiller
 
-      PROJECT_ID=($(gcloud projects list --filter=name=${PROJECT_NAME} --format="value(PROJECT_ID)"))
-
-      [[ "${#PROJECT_ID[@]}" = 1 ]] || exit 1
-
+      gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
       gcloud container clusters get-credentials survey-runner --region ${REGION} --project ${PROJECT_ID}
 
       DOCKER_REGISTRY="$DOCKER_REGISTRY" IMAGE_TAG="$IMAGE_TAG" RUNNER_URL="$RUNNER_URL" ./k8s/deploy_app.sh
