@@ -28,7 +28,7 @@ The dockerfile is a multistage dockerfile which can be built using:
 docker build -t eq-questionnaire-launcher:latest .
 ```
 
-You can then run the image using `SURVEY_RUNNER_SCHEMA_URL` to point it at an instance of survey runner. 
+You can then run the image using `SURVEY_RUNNER_SCHEMA_URL` to point it at an instance of survey runner.
 
 ```
 docker run -e SURVEY_RUNNER_SCHEMA_URL=http://localhost:5000 -it -p 8000:8000 eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:latest
@@ -42,7 +42,7 @@ docker run -e SURVEY_RUNNER_SCHEMA_URL=http://docker.for.mac.host.internal:5000 
 
 You should then be able to access go launcher at `localhost:8000`
 
-You can also run a Survey Register for launcher to load Schemas from 
+You can also run a Survey Register for launcher to load Schemas from
 
 ```
 docker run -it -p 8080:8080 onsdigital/eq-survey-register:simple-rest-api
@@ -60,36 +60,32 @@ Now run Go launcher and navigate to "http://localhost:8000/quick-launch?url=" pa
 e.g."http://localhost:8000/quick-launch?url=http://localhost:7777/1_0001.json"
 ```
 
-### Deployment with [Helm](https://helm.sh/)
+### Deployment with [Concourse](https://concourse-ci.org/)
 
-To deploy this application with helm, you must have a kubernetes cluster already running and be logged into the cluster.
-
-Log in to the cluster using:
-```
-gcloud container clusters get-credentials survey-runner --region <region> --project <gcp_project_id>
-```
-
-You need to have Helm installed locally
-
-1. Install Helm with `brew install kubernetes-helm` and then run `helm init --client-only`
-
-1. Install Helm Tiller plugin for tillerless deploys `helm plugin install https://github.com/rimusz/helm-tiller`
+To deploy this application with Concourse, you must have a Kubernetes cluster already and be logged in to a Concourse instance.
 
 ---
 
-The following environment variables can be set when deploying the app.
+The following environment variables should be set when deploying the app:
 - RUNNER_URL
-- DOCKER_REGISTRY *(optional)*
-- IMAGE_TAG *(optional)*
+- PROJECT_ID
+
+The following are optional variables that can also be set if needed:
+- DOCKER_REGISTRY
+- IMAGE_TAG
+- REGION
 
 To deploy to a cluster you can run the following command
 
+```sh
+RUNNER_URL=<runner_instance_url> PROJECT_ID=<project_id> fly -t <target_concourse_instance> \
+--config ci/deploy.yaml --input eq-questionnaire-launcher-repo=.
 ```
-./k8s/deploy_app.sh
-```
-##### Example
+
+##### For Example:
  ```
-RUNNER_URL=https://example.com ./k8s/deploy_app.sh
+RUNNER_URL=https://example.com PROJECT_ID=my-project-id fly -t census-eq-ci \
+--config ci/deploy.yaml --input eq-questionnaire-launcher-repo=.
 ```
 
 ### Notes
