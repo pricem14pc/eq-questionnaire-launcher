@@ -6,11 +6,11 @@ image_resource:
 params:
   GOOGLE_APPLICATION_CREDENTIALS: /root/gcloud-service-key.json
   SERVICE_ACCOUNT_JSON: ((gcp.service_account_json))
+  DOCKER_REGISTRY: eu.gcr.io/census-eq-ci
+  IMAGE_TAG: latest
   RUNNER_URL:
-  DOCKER_REGISTRY:
-  IMAGE_TAG:
   REGION:
-  PROJECT_NAME:
+  PROJECT_ID:
 inputs:
   - name: eq-questionnaire-launcher-repo
 run:
@@ -24,12 +24,11 @@ run:
       $SERVICE_ACCOUNT_JSON
       EOL
 
-      cd eq-questionnaire-launcher-repo
-
-      helm init --client-only
-      helm plugin install https://github.com/rimusz/helm-tiller
-
       gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
       gcloud container clusters get-credentials survey-runner --region ${REGION} --project ${PROJECT_ID}
 
-      DOCKER_REGISTRY="$DOCKER_REGISTRY" IMAGE_TAG="$IMAGE_TAG" RUNNER_URL="$RUNNER_URL" ./k8s/deploy_app.sh
+      helm init --client-only
+      helm plugin install https://github.com/rimusz/helm-tiller || :
+
+      cd eq-questionnaire-launcher-repo
+      ./k8s/deploy_app.sh

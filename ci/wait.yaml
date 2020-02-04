@@ -9,5 +9,6 @@ run:
   path: sh
   args:
     - -exc
-    - |
-      until wget -qO- https://${LAUNCHER_FQDN}/status 2>&1 | grep "OK"; do sleep 5; done
+    - >
+      until wget -qO- https://${LAUNCHER_FQDN}/status 2>&1 | grep "OK";
+      do sleep 5; done
