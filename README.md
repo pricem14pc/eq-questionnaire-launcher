@@ -84,7 +84,7 @@ RUNNER_URL=<runner_instance_url> PROJECT_ID=<project_id> fly -t <target_concours
 
 ##### For Example:
  ```
-RUNNER_URL=https://example.com PROJECT_ID=my-project-id fly -t census-eq-ci \
+RUNNER_URL=example.com PROJECT_ID=my-project-id fly -t census-eq-ci execute \
 --config ci/deploy.yaml --input eq-questionnaire-launcher-repo=.
 ```
 
