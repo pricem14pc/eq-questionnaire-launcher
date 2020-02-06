@@ -15,10 +15,10 @@ script:
   - go get -t ./...
   - CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo
   - export TAG="${TRAVIS_PULL_REQUEST_BRANCH:-latest}"
-  - docker build -t eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:"$TAG" .
+  - docker build -t ${DOCKER_REGISTRY}/eq-questionnaire-launcher:"$TAG" .
   - echo "$DOCKER_GCR_PASSWORD" | base64 --decode | docker login -u "$DOCKER_GCR_USERNAME" --password-stdin https://eu.gcr.io
   - echo "Pushing to GCR with tag [$TAG]"
-  - docker push eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:"$TAG"
+  - docker push ${DOCKER_REGISTRY}/eq-questionnaire-launcher:"$TAG"
 branches:
   only:
     - master

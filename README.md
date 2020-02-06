@@ -31,13 +31,13 @@ docker build -t eq-questionnaire-launcher:latest .
 You can then run the image using `SURVEY_RUNNER_SCHEMA_URL` to point it at an instance of survey runner.
 
 ```
-docker run -e SURVEY_RUNNER_SCHEMA_URL=http://localhost:5000 -it -p 8000:8000 eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:latest
+docker run -e SURVEY_RUNNER_SCHEMA_URL=http://localhost:5000 -it -p 8000:8000 <docker-registry>/eq-questionnaire-launcher:latest
 ```
 
 The syntax for this will be slightly different on Mac
 
 ```
-docker run -e SURVEY_RUNNER_SCHEMA_URL=http://docker.for.mac.host.internal:5000 -it -p 8000:8000 eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:latest
+docker run -e SURVEY_RUNNER_SCHEMA_URL=http://docker.for.mac.host.internal:5000 -it -p 8000:8000 <docker-registry>/eq-questionnaire-launcher:latest
 ```
 
 You should then be able to access go launcher at `localhost:8000`
@@ -78,14 +78,19 @@ The following are optional variables that can also be set if needed:
 To deploy to a cluster you can run the following command
 
 ```sh
-RUNNER_URL=<runner_instance_url> PROJECT_ID=<project_id> fly -t <target_concourse_instance> \
---config ci/deploy.yaml --input eq-questionnaire-launcher-repo=.
+RUNNER_URL=<runner_instance_url> \
+PROJECT_ID=<project_id> \
+fly -t <target_concourse_instance> execute \
+  --config ci/deploy.yaml --input eq-questionnaire-launcher-repo=.
 ```
 
 ##### For Example:
  ```
-RUNNER_URL=example.com PROJECT_ID=my-project-id fly -t census-eq-ci execute \
---config ci/deploy.yaml --input eq-questionnaire-launcher-repo=.
+RUNNER_URL=example.com \
+PROJECT_ID=my-project-id \
+fly -t <target-concourse-instance> execute \
+  --config ci/deploy.yaml \
+  --input eq-questionnaire-launcher-repo=.
 ```
 
 ### Notes

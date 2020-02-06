@@ -6,9 +6,9 @@ image_resource:
 params:
   GOOGLE_APPLICATION_CREDENTIALS: /root/gcloud-service-key.json
   SERVICE_ACCOUNT_JSON: ((gcp.service_account_json))
-  DOCKER_REGISTRY: eu.gcr.io/census-eq-ci
   IMAGE_TAG: latest
   REGION: europe-west2
+  DOCKER_REGISTRY:
   RUNNER_URL:
   PROJECT_ID:
 inputs:
