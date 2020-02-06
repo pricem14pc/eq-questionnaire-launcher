@@ -62,7 +62,7 @@ e.g."http://localhost:8000/quick-launch?url=http://localhost:7777/1_0001.json"
 
 ### Deployment with [Concourse](https://concourse-ci.org/)
 
-To deploy this application with Concourse, you must have a Kubernetes cluster already and be logged in to a Concourse instance.
+To deploy this application with Concourse, you must have a Kubernetes cluster and be logged in to a Concourse instance.
 
 ---
 
