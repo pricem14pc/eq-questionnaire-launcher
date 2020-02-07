@@ -12,7 +12,7 @@ params:
   RUNNER_URL:
   PROJECT_ID:
 inputs:
-  - name: eq-questionnaire-launcher-repo
+  - name: eq-questionnaire-launcher
 run:
   path: bash
   args:
@@ -30,5 +30,5 @@ run:
       helm init --client-only
       helm plugin install https://github.com/rimusz/helm-tiller
 
-      cd eq-questionnaire-launcher-repo
+      cd eq-questionnaire-launcher
       ./k8s/deploy_app.sh
