@@ -69,9 +69,9 @@ To deploy this application with Concourse, you must have a Kubernetes cluster an
 The following environment variables should be set when deploying the app:
 - RUNNER_URL
 - PROJECT_ID
+- DOCKER_REGISTRY
 
 The following are optional variables that can also be set if needed:
-- DOCKER_REGISTRY
 - IMAGE_TAG
 - REGION
 
@@ -81,16 +81,7 @@ To deploy to a cluster you can run the following command
 RUNNER_URL=<runner_instance_url> \
 PROJECT_ID=<project_id> \
 fly -t <target_concourse_instance> execute \
-  --config ci/deploy.yaml --input eq-questionnaire-launcher-repo=.
-```
-
-##### For Example:
- ```
-RUNNER_URL=example.com \
-PROJECT_ID=my-project-id \
-fly -t <target-concourse-instance> execute \
-  --config ci/deploy.yaml \
-  --input eq-questionnaire-launcher-repo=.
+  --config ci/deploy.yaml
 ```
 
 ### Notes
