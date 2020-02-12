@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-set -e
+set -euxo pipefail
 
 if [[ -z "$RUNNER_URL" ]]; then
   echo "RUNNER_URL is mandatory"
