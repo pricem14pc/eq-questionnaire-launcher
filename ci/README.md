@@ -10,6 +10,7 @@ The following environment variables must be set when deploying the app:
 - DOCKER_REGISTRY
 
 The following are optional variables that can also be set if needed:
+- SERVICE_ACCOUNT_JSON
 - IMAGE_TAG
 - REGION
 
