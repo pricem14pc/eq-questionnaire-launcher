@@ -31,13 +31,13 @@ docker build -t eq-questionnaire-launcher:latest .
 You can then run the image using `SURVEY_RUNNER_SCHEMA_URL` to point it at an instance of survey runner.
 
 ```
-docker run -e SURVEY_RUNNER_SCHEMA_URL=http://localhost:5000 -it -p 8000:8000 <docker-registry>/eq-questionnaire-launcher:latest
+docker run -e SURVEY_RUNNER_SCHEMA_URL=http://localhost:5000 -it -p 8000:8000 onsdigital/eq-questionnaire-launcher:latest
 ```
 
 The syntax for this will be slightly different on Mac
 
 ```
-docker run -e SURVEY_RUNNER_SCHEMA_URL=http://docker.for.mac.host.internal:5000 -it -p 8000:8000 <docker-registry>/eq-questionnaire-launcher:latest
+docker run -e SURVEY_RUNNER_SCHEMA_URL=http://docker.for.mac.host.internal:5000 -it -p 8000:8000 onsdigital/eq-questionnaire-launcher:latest
 ```
 
 You should then be able to access go launcher at `localhost:8000`
@@ -58,30 +58,6 @@ scripts/run_app.sh
 Now run Go launcher and navigate to "http://localhost:8000/quick-launch?url=" passing the url of the JSON
 ```
 e.g."http://localhost:8000/quick-launch?url=http://localhost:7777/1_0001.json"
-```
-
-### Deployment with [Concourse](https://concourse-ci.org/)
-
-To deploy this application with Concourse, you must have a Kubernetes cluster and be logged in to a Concourse instance.
-
----
-
-The following environment variables should be set when deploying the app:
-- RUNNER_URL
-- PROJECT_ID
-- DOCKER_REGISTRY
-
-The following are optional variables that can also be set if needed:
-- IMAGE_TAG
-- REGION
-
-To deploy to a cluster you can run the following command
-
-```sh
-RUNNER_URL=<runner_instance_url> \
-PROJECT_ID=<project_id> \
-fly -t <target_concourse_instance> execute \
-  --config ci/deploy.yaml
 ```
 
 ### Notes
