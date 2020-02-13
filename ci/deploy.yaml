@@ -7,9 +7,9 @@ params:
   SERVICE_ACCOUNT_JSON: ((gcp.service_account_json))
   PROJECT_ID:
   REGION: europe-west2
-  RUNNER_URL:
   DOCKER_REGISTRY:
   IMAGE_TAG: latest
+  RUNNER_URL:
 inputs:
   - name: eq-questionnaire-launcher
 run:
