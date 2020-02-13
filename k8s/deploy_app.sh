@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-if [[ -z "$RUNNER_URL" ]]; then
-  echo "RUNNER_URL is mandatory"
-  exit 1
-fi
-
 helm tiller run \
     helm upgrade --install \
     survey-launcher \
