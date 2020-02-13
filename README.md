@@ -28,21 +28,21 @@ The dockerfile is a multistage dockerfile which can be built using:
 docker build -t eq-questionnaire-launcher:latest .
 ```
 
-You can then run the image using `SURVEY_RUNNER_SCHEMA_URL` to point it at an instance of survey runner. 
+You can then run the image using `SURVEY_RUNNER_SCHEMA_URL` to point it at an instance of survey runner.
 
 ```
-docker run -e SURVEY_RUNNER_SCHEMA_URL=http://localhost:5000 -it -p 8000:8000 eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:latest
+docker run -e SURVEY_RUNNER_SCHEMA_URL=http://localhost:5000 -it -p 8000:8000 onsdigital/eq-questionnaire-launcher:latest
 ```
 
 The syntax for this will be slightly different on Mac
 
 ```
-docker run -e SURVEY_RUNNER_SCHEMA_URL=http://docker.for.mac.host.internal:5000 -it -p 8000:8000 eu.gcr.io/census-eq-ci/eq-questionnaire-launcher:latest
+docker run -e SURVEY_RUNNER_SCHEMA_URL=http://docker.for.mac.host.internal:5000 -it -p 8000:8000 onsdigital/eq-questionnaire-launcher:latest
 ```
 
 You should then be able to access go launcher at `localhost:8000`
 
-You can also run a Survey Register for launcher to load Schemas from 
+You can also run a Survey Register for launcher to load Schemas from
 
 ```
 docker run -it -p 8080:8080 onsdigital/eq-survey-register:simple-rest-api
@@ -77,19 +77,15 @@ You need to have Helm installed locally
 
 ---
 
-The following environment variables can be set when deploying the app.
+The following environment variables must be set when deploying the app.
 - RUNNER_URL
-- DOCKER_REGISTRY *(optional)*
-- IMAGE_TAG *(optional)*
+- DOCKER_REGISTRY
+- IMAGE_TAG
 
 To deploy to a cluster you can run the following command
 
 ```
 ./k8s/deploy_app.sh
-```
-##### Example
- ```
-RUNNER_URL=https://example.com ./k8s/deploy_app.sh
 ```
 
 ### Notes
