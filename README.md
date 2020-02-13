@@ -87,10 +87,6 @@ To deploy to a cluster you can run the following command
 ```
 ./k8s/deploy_app.sh
 ```
-##### Example
- ```
-RUNNER_URL=https://example.com ./k8s/deploy_app.sh
-```
 
 ### Notes
 * There are no unit tests yet

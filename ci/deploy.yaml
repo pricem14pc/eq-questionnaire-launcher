@@ -5,11 +5,11 @@ image_resource:
     repository: theorf/google-cloud-sdk-helm
 params:
   SERVICE_ACCOUNT_JSON: ((gcp.service_account_json))
-  IMAGE_TAG: latest
-  REGION: europe-west2
-  DOCKER_REGISTRY:
-  RUNNER_URL:
   PROJECT_ID:
+  REGION: europe-west2
+  RUNNER_URL:
+  DOCKER_REGISTRY:
+  IMAGE_TAG: latest
 inputs:
   - name: eq-questionnaire-launcher
 run:
