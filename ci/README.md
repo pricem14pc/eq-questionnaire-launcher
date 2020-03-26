@@ -14,7 +14,7 @@ The following are optional variables that can also be set if needed:
 - REGION
 - IMAGE_TAG
 
-	To deploy the app to the cluster via Concourse, use the following task command, specifying the `image_registry` and the `build_image_version` variables:
+	To deploy the app to the cluster via Concourse, use the following task command, specifying the `image_registry` and the `deploy_image_version` variables:
 
 ```sh
 PROJECT_ID=<project_id> \
@@ -23,5 +23,5 @@ RUNNER_URL=<runner_instance_url> \
 fly -t <target_concourse_instance> execute \
   --config ci/deploy.yaml
   -v image_registry=<docker-registry> \
-  -v build_image_version=<image-tag>
+  -v deploy_image_version=<image-tag>
 ```
