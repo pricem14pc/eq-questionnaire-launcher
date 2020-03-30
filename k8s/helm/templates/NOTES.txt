@@ -1,1 +1,1 @@
-Survey Launcher Application deployed.
+Questionnaire Launcher Application deployed.

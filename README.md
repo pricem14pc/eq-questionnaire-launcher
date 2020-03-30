@@ -51,7 +51,7 @@ docker run -it -p 8080:8080 onsdigital/eq-survey-register:simple-rest-api
 ### Run Quick-Launch
 If the schema specifies a `schema_name` field, that will be used as the schema_name claim. If not, the filename from the URL (before `.`) will be used.
 
-Run Survey Launcher
+Run Questionnaire Launcher
 ```
 scripts/run_app.sh
 ```
