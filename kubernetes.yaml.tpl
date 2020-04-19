@@ -33,6 +33,12 @@ spec:
         image: eu.gcr.io/GOOGLE_CLOUD_PROJECT/eq-questionnaire-launcher:COMMIT_SHA
         ports:
         - containerPort: 8000
+        env:
+          - name: SURVEY_RUNNER_URL
+            valueFrom:
+              secretKeyRef:
+                name: launcher-secrets
+                key: SURVEY_RUNNER_URL
 ---
 kind: Service
 apiVersion: v1
