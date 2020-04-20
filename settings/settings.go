@@ -9,6 +9,7 @@ var _settings map[string]string
 
 func setSetting(key string, defaultValue string) {
 	if value, present := os.LookupEnv(key); present {
+		log.Printf("%s environment variable found", key)
 		_settings[key] = value
 	} else {
 		log.Printf("%s environment variable not present, setting to default value %s", key, defaultValue)
