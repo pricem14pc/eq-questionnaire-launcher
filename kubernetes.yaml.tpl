@@ -34,11 +34,11 @@ spec:
         ports:
         - containerPort: 8000
         env:
-          - name: SURVEY_RUNNER_URL
+          - name: SURVEY_RUNNER_SCHEMA_URL
             valueFrom:
               secretKeyRef:
                 name: launcher-secrets
-                key: SURVEY_RUNNER_URL
+                key: SURVEY_RUNNER_SCHEMA_URL
 ---
 kind: Service
 apiVersion: v1
