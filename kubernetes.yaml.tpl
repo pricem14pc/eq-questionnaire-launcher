@@ -39,6 +39,11 @@ spec:
               secretKeyRef:
                 name: launcher-secrets
                 key: SURVEY_RUNNER_SCHEMA_URL
+          - name: SURVEY_RUNNER_URL
+            valueFrom:
+              secretKeyRef:
+                name: launcher-secrets
+                key: SURVEY_RUNNER_URL
 ---
 kind: Service
 apiVersion: v1
