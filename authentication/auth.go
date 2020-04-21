@@ -144,7 +144,7 @@ func generateClaims(claimValues map[string][]string, launcherSchema surveys.Laun
 		}
 	}
 
-	if len(claimValues["survey"]) > 0 || len(claimValues["case_type"]) > 0 || len(claimValues["region_code"]) > 0 {
+	if len(claimValues["survey"]) > 0 || len(claimValues["form_type"]) > 0 || len(claimValues["region_code"]) > 0 {
 		log.Println("Deleting schema name from claims")
 		delete(claims, "schema_name")
 	} else {
@@ -396,19 +396,18 @@ func TransformSchemaParamsToName(postValues url.Values) string {
 		return postValues["schema_name"][0]
 	}
 
-	caseTypeMap := map[string]string{
-		"HH": "household",
-		"HI": "individual",
-		"CE": "communal_establishment",
-		"CI": "communal_individual",
+	formTypeMap := map[string]string{
+		"H": "household",
+		"I": "individual",
+		"C": "communal_establishment",
 	}
 
 	regionCode := strings.Replace(postValues.Get("region_code"), "-", "_", -1)
 	regionCode = strings.ToLower(regionCode)
 
 	survey := postValues.Get("survey")
-	caseType := caseTypeMap[postValues.Get("case_type")]
-	schemaName := fmt.Sprintf("%s_%s_%s", survey, caseType, regionCode)
+	formType := formTypeMap[postValues.Get("form_type")]
+	schemaName := fmt.Sprintf("%s_%s_%s", survey, formType, regionCode)
 
 	return schemaName
 }
