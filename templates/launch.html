@@ -45,7 +45,7 @@
 
     <div id="census_claims">
     </div>
-    
+
     <h3>Survey Metadata</h3>
     <div id="survey_metadata">
         <p>--- Metadata fields will be loaded when you select a schema ---</p>
@@ -117,7 +117,7 @@
             <option name="dumper" value="dumper" selected="selected">dumper</option>
         </select>
     </div>
-    
+
     <div class="field-container">
         <label for="account_service_url">Account Service URL</label>
         <input id="account_service_url" name="account_service_url" type="text" value="{{.AccountServiceURL}}" class="qa-account_service_url">
@@ -151,41 +151,46 @@
         document.getElementById('census_claims').innerHTML = ""
     }
 
-    function includeCensusClaims() {
-        let schema_name = document.getElementById('schema_name').value
-        let matches = schema_name_census_regex.exec(schema_name)
+    function includeCensusClaims(schema_name, is_census_test_schema = false) {
+        let surveyValue = "CENSUS"
+        let formTypeValue = "C"
+        let regionCodeValue = "GB-ENG"
 
-        let surveyValue = matches[1].toUpperCase()
-        let formTypeValue = form_types[matches[2]]
-        let regionCodeValue = matches[3].toUpperCase().replace('_', '-')
+        if (!is_census_test_schema) {
+            const matches = schema_name_census_regex.exec(schema_name)
+            surveyValue = matches[1].toUpperCase()
+            formTypeValue = form_types[matches[2]]
+            regionCodeValue = matches[3].toUpperCase().replace('_', '-')
+        }
 
-        var CensusClaimsHtml = "<div class=\"field-container\">" +
-                "<label for=\"survey\">Survey</label>" +
-                "<input id=\"survey\" name=\"survey\" type=\"text\" value=\"" + surveyValue + "\" class=\"qa-survey\">" +
-                "</div>" + 
-                "<div class=\"field-container\">" +
-                "<label for=\"form_type\">Form Type</label>" +
-                "<input id=\"form_type\" name=\"form_type\" type=\"text\" value=\"" + formTypeValue + "\" class=\"qa-form_type\">" +
-                "</div>" + 
-                "<div class=\"field-container\">" +
-                "<label for=\"region_code\">Region Code</label>" +
-                "<input id=\"region_code\" name=\"region_code\" type=\"text\" value=\"" + regionCodeValue+ "\" class=\"qa-region_code\">" +
-                "</div>" +
-                "<div class=\"field-container\">" +
-                "<label for=\"channel\">Channel</label>" +
-                "<input id=\"channel\" name=\"channel\" type=\"text\" value=\"RH\" class=\"qa-channel\">" +
-                "</div>" 
-
-        document.getElementById('census_claims').innerHTML = CensusClaimsHtml
+        document.getElementById('census_claims').innerHTML = `
+            <div class="field-container">
+                <label for="survey">Survey</label>
+                <input id="survey" name="survey" type="text" value="${surveyValue}" class="qa-survey">
+            </div>
+            <div class="field-container">
+                <label for="form_type">Form Type</label>
+                <input id="form_type" name="form_type" type="text" value="${formTypeValue}" class="qa-form_type">
+            </div>
+            <div class="field-container">
+                <label for="region_code">Region Code</label>
+                <input id="region_code" name="region_code" type="text" value="${regionCodeValue}" class="qa-region_code">
+            </div>
+            <div class="field-container">
+                <label for="channel">Channel</label>
+                <input id="channel" name="channel" type="text" value="RH" class="qa-channel">
+            </div>
+        `
     }
 
     function loadMetadata() {
         document.getElementById("submit-btn").disabled = true;
         document.getElementById("flush-btn").disabled = true;
 
-        let schema_name = document.getElementById("schema_name").value
-        if (schema_name.startsWith('census') || schema_name.startsWith('ccs')) {
-            includeCensusClaims()
+        const schema_name = document.getElementById("schema_name").value
+        const is_census_test_schema = schema_name === "test_individual_response"
+        if (is_census_test_schema || schema_name.startsWith('census') || schema_name.startsWith('ccs')) {
+            includeCensusClaims(schema_name, is_census_test_schema)
         } else {
             clearCensusClaims()
         }
@@ -217,25 +222,25 @@
                             if (metadataField['type'] == "boolean") {
 
                                 metadataFieldHtml = "<div class=\"field-container\">" +
-                                        "<label for=\"" + metadataField['name'] + "\">" + metadataField['name'] + "</label>" +
-                                        "<input id=\"" + metadataField['name'] + "\" name=\"" + metadataField['name'] + "\" type=\"checkbox\" name=\"" + metadataField['name'] + "\" class=\"qa-" + metadataField['name'] + "\">" +
-                                        "</div>"
+                                    "<label for=\"" + metadataField['name'] + "\">" + metadataField['name'] + "</label>" +
+                                    "<input id=\"" + metadataField['name'] + "\" name=\"" + metadataField['name'] + "\" type=\"checkbox\" name=\"" + metadataField['name'] + "\" class=\"qa-" + metadataField['name'] + "\">" +
+                                    "</div>"
 
                             } else if (metadataField['type'] == "uuid") {
 
                                 metadataFieldHtml = "<div class=\"field-container\">" +
-                                        "<label for=\"" + metadataField['name'] + "\">" + metadataField['name'] + "</label>" +
-                                        "<span>" +
-                                        "<input id=\"" + metadataField['name'] + "\" name=\"" + metadataField['name'] + "\" type=\"text\" value=\"" + uuidv4() + "\" class=\"" + metadataField['name'] + "\">" +
-                                        "<img onclick=\"uuid('" + metadataField['name'] + "')\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48Zz48cGF0aCBkPSJNMjU2LDM4NC4xYy03MC43LDAtMTI4LTU3LjMtMTI4LTEyOC4xYzAtNzAuOCw1Ny4zLTEyOC4xLDEyOC0xMjguMVY4NGw5Niw2NGwtOTYsNTUuN3YtNTUuOCAgIGMtNTkuNiwwLTEwOC4xLDQ4LjUtMTA4LjEsMTA4LjFjMCw1OS42LDQ4LjUsMTA4LjEsMTA4LjEsMTA4LjFTMzY0LjEsMzE2LDM2NC4xLDI1NkgzODRDMzg0LDMyNywzMjYuNywzODQuMSwyNTYsMzg0LjF6Ii8+PC9nPjwvc3ZnPg==\">" +
-                                        "</span>" +
-                                        "</div>"
+                                    "<label for=\"" + metadataField['name'] + "\">" + metadataField['name'] + "</label>" +
+                                    "<span>" +
+                                    "<input id=\"" + metadataField['name'] + "\" name=\"" + metadataField['name'] + "\" type=\"text\" value=\"" + uuidv4() + "\" class=\"" + metadataField['name'] + "\">" +
+                                    "<img onclick=\"uuid('" + metadataField['name'] + "')\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48Zz48cGF0aCBkPSJNMjU2LDM4NC4xYy03MC43LDAtMTI4LTU3LjMtMTI4LTEyOC4xYzAtNzAuOCw1Ny4zLTEyOC4xLDEyOC0xMjguMVY4NGw5Niw2NGwtOTYsNTUuN3YtNTUuOCAgIGMtNTkuNiwwLTEwOC4xLDQ4LjUtMTA4LjEsMTA4LjFjMCw1OS42LDQ4LjUsMTA4LjEsMTA4LjEsMTA4LjFTMzY0LjEsMzE2LDM2NC4xLDI1NkgzODRDMzg0LDMyNywzMjYuNywzODQuMSwyNTYsMzg0LjF6Ii8+PC9nPjwvc3ZnPg==\">" +
+                                    "</span>" +
+                                    "</div>"
 
                             } else {
                                 metadataFieldHtml = "<div class=\"field-container\">" +
-                                        "<label for=\"" + metadataField['name'] + "\">" + metadataField['name'] + "</label>" +
-                                        "<input id=\"" + metadataField['name'] + "\" name=\"" + metadataField['name'] + "\" type=\"text\" value=\"" + defaultValue + "\" class=\"qa-" + metadataField['name'] + "\">" +
-                                        "</div>"
+                                    "<label for=\"" + metadataField['name'] + "\">" + metadataField['name'] + "</label>" +
+                                    "<input id=\"" + metadataField['name'] + "\" name=\"" + metadataField['name'] + "\" type=\"text\" value=\"" + defaultValue + "\" class=\"qa-" + metadataField['name'] + "\">" +
+                                    "</div>"
                             }
 
                             document.getElementById("survey_metadata").innerHTML = document.getElementById("survey_metadata").innerHTML + metadataFieldHtml;
@@ -252,12 +257,12 @@
                 }
             }
         };
-        xhttp.open("GET", "/metadata?schema=" + document.getElementById('schema_name').value , true);
+        xhttp.open("GET", "/metadata?schema=" + document.getElementById('schema_name').value, true);
         xhttp.send();
     }
 
     function uuid(el_id) {
-      document.getElementById(el_id).value = uuidv4();
+        document.getElementById(el_id).value = uuidv4();
     }
 
     function numericId(el_id) {
@@ -270,12 +275,12 @@
     }
 
     function ruref(el_id) {
-      var result = '';
-      var chars = '0123456789';
-      for (var i = 11; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
-      var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      result += chars[Math.round(Math.random() * (chars.length - 1))];
-      document.getElementById(el_id).value = result;
+        var result = '';
+        var chars = '0123456789';
+        for (var i = 11; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+        var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        result += chars[Math.round(Math.random() * (chars.length - 1))];
+        document.getElementById(el_id).value = result;
     }
 
     uuid('collection_exercise_sid');
