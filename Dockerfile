@@ -1,16 +1,15 @@
-# Start from golang v1.8 base image
-FROM golang:1.8 as builder
+# Start from golang base image
+FROM golang:1.16 as builder
 
 WORKDIR /go/src/github.com/ONSdigital/eq-questionnaire-launcher
 
 COPY . .
 
 # Download dependencies
-RUN go get -u github.com/golang/dep/cmd/dep
-RUN $GOPATH/bin/dep ensure
+RUN go get
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/eq-questionnaire-launcher .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -mod mod -o /go/bin/eq-questionnaire-launcher .
 
 ######## Start a new stage from scratch #######
 FROM alpine:latest  
