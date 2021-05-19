@@ -172,7 +172,7 @@
 
         const schema_name = document.getElementById("schema_name").value
         const is_census_test_schema = schema_name === "test_individual_response"
-        if (is_census_test_schema || schema_name.startsWith('census') || schema_name.startsWith('ccs')) {
+        if (is_census_test_schema) {
             includeCensusClaims(schema_name, is_census_test_schema)
         } else {
             clearCensusClaims()
