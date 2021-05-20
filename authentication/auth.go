@@ -389,25 +389,15 @@ func GenerateTokenFromDefaults(surveyURL string, accountServiceURL string, accou
 	return token, ""
 }
 
-// TransformSchemaParamsToName Returns a schema name from census schema parameters
-// This function can be removed after census claims are removed.
+// TransformSchemaParamsToName Returns a schema name from business schema parameters
 func TransformSchemaParamsToName(postValues url.Values) string {
 	if postValues.Get("schema_name") != "" {
 		return postValues["schema_name"][0]
 	}
 
-	formTypeMap := map[string]string{
-		"H": "household",
-		"I": "individual",
-		"C": "communal_establishment",
-	}
-
-	regionCode := strings.Replace(postValues.Get("region_code"), "-", "_", -1)
-	regionCode = strings.ToLower(regionCode)
-
-	survey := postValues.Get("survey")
-	formType := formTypeMap[postValues.Get("form_type")]
-	schemaName := fmt.Sprintf("%s_%s_%s", survey, formType, regionCode)
+	eqId := postValues.Get("eq_id")
+	formType := postValues.Get("form_type")
+	schemaName := fmt.Sprintf("%s_%s", eqId, formType)
 
 	return schemaName
 }
