@@ -526,7 +526,6 @@ func GetDefaultValues() map[string]string {
 	defaults["postcode"] = "PE12 4GH"
 	defaults["display_address"] = "68 Abingdon Road, Goathill"
 	defaults["country"] = "E"
-	defaults["eq_id"] = "mbs"
 
 	return defaults
 }
