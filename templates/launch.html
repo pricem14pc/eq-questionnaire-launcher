@@ -139,12 +139,13 @@
         let formTypeValue = schema_name.split('_')[1]
 
         document.getElementById('business_claims').innerHTML = `
+            <h3>Business Survey Metadata</h3>
             <div class="field-container">
-                <label for="eq_id">Eq ID</label>
+                <label for="eq_id">eq_id</label>
                 <input id="eq_id" name="eq_id" type="text" value="${eqIdValue}" class="qa-eq_id">
             </div>
             <div class="field-container">
-                <label for="form_type">Form Type</label>
+                <label for="form_type">form_type</label>
                 <input id="form_type" name="form_type" type="text" value="${formTypeValue}" class="qa-form_type">
             </div>
         `
