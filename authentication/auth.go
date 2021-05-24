@@ -143,7 +143,7 @@ func generateClaims(claimValues map[string][]string, launcherSchema surveys.Laun
 			claims[key] = value
 		}
 	}
-	if len(claimValues["form_type"]) > 0 {
+	if len(claimValues["form_type"]) > 0 && len(claimValues["eq_id"]) > 0 {
 		log.Println("Deleting schema name from claims")
 		delete(claims, "schema_name")
 	} else {
