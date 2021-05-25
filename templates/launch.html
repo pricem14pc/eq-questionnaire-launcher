@@ -15,16 +15,6 @@
                     <option name="{{.Name}}" value="{{.Name}}">{{.Name}}</option>
                 {{end}}
             </optgroup>
-            <optgroup label="CCS Surveys">
-                {{range .Schemas.CCS}}
-                    <option name="{{.Name}}" value="{{.Name}}">{{.Name}}</option>
-                {{end}}
-            </optgroup>
-            <optgroup label="Census Surveys">
-                {{range .Schemas.Census}}
-                    <option name="{{.Name}}" value="{{.Name}}">{{.Name}}</option>
-                {{end}}
-            </optgroup>
             <optgroup label="Social Surveys">
                 {{range .Schemas.Social}}
                     <option name="{{.Name}}" value="{{.Name}}">{{.Name}}</option>
@@ -43,7 +33,7 @@
         </select>
     </div>
 
-    <div id="census_claims">
+    <div id="business_claims">
     </div>
 
     <h3>Survey Metadata</h3>
@@ -132,45 +122,23 @@
     // uuidv4: from https://github.com/kelektiv/node-uuid
     !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var n;n="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,n.uuidv4=e()}}(function(){return function e(n,r,o){function t(f,u){if(!r[f]){if(!n[f]){var a="function"==typeof require&&require;if(!u&&a)return a(f,!0);if(i)return i(f,!0);var d=new Error("Cannot find module '"+f+"'");throw d.code="MODULE_NOT_FOUND",d}var p=r[f]={exports:{}};n[f][0].call(p.exports,function(e){var r=n[f][1][e];return t(r?r:e)},p,p.exports,e,n,r,o)}return r[f].exports}for(var i="function"==typeof require&&require,f=0;f<o.length;f++)t(o[f]);return t}({1:[function(e,n,r){function o(e,n){var r=n||0,o=t;return[o[e[r++]],o[e[r++]],o[e[r++]],o[e[r++]],"-",o[e[r++]],o[e[r++]],"-",o[e[r++]],o[e[r++]],"-",o[e[r++]],o[e[r++]],"-",o[e[r++]],o[e[r++]],o[e[r++]],o[e[r++]],o[e[r++]],o[e[r++]]].join("")}for(var t=[],i=0;i<256;++i)t[i]=(i+256).toString(16).substr(1);n.exports=o},{}],2:[function(e,n,r){var o="undefined"!=typeof crypto&&crypto.getRandomValues&&crypto.getRandomValues.bind(crypto)||"undefined"!=typeof msCrypto&&"function"==typeof window.msCrypto.getRandomValues&&msCrypto.getRandomValues.bind(msCrypto);if(o){var t=new Uint8Array(16);n.exports=function(){return o(t),t}}else{var i=new Array(16);n.exports=function(){for(var e,n=0;n<16;n++)0===(3&n)&&(e=4294967296*Math.random()),i[n]=e>>>((3&n)<<3)&255;return i}}},{}],3:[function(e,n,r){function o(e,n,r){var o=n&&r||0;"string"==typeof e&&(n="binary"===e?new Array(16):null,e=null),e=e||{};var f=e.random||(e.rng||t)();if(f[6]=15&f[6]|64,f[8]=63&f[8]|128,n)for(var u=0;u<16;++u)n[o+u]=f[u];return n||i(f)}var t=e("./lib/rng"),i=e("./lib/bytesToUuid");n.exports=o},{"./lib/bytesToUuid":1,"./lib/rng":2}]},{},[3])(3)});
 
-    const schema_name_census_regex = /^(census|ccs)_(household|individual|communal_establishment)_(gb_[a-z]{3})\s*$/
-    const form_types = {
-        'household': 'H',
-        'individual': 'I',
-        'communal_establishment': 'C',
+    function clearBusinessClaims() {
+        document.getElementById('business_claims').innerHTML = ""
     }
 
-    function clearCensusClaims() {
-        document.getElementById('census_claims').innerHTML = ""
-    }
+    function includeBusinessClaims(schema_name) {
+        let eqIdValue = schema_name.split('_')[0]
+        let formTypeValue = schema_name.split('_')[1]
 
-    function includeCensusClaims(schema_name, is_census_test_schema = false) {
-        let surveyValue = "CENSUS"
-        let formTypeValue = "C"
-        let regionCodeValue = "GB-ENG"
-
-        if (!is_census_test_schema) {
-            const matches = schema_name_census_regex.exec(schema_name)
-            surveyValue = matches[1].toUpperCase()
-            formTypeValue = form_types[matches[2]]
-            regionCodeValue = matches[3].toUpperCase().replace('_', '-')
-        }
-
-        document.getElementById('census_claims').innerHTML = `
+        document.getElementById('business_claims').innerHTML = `
+            <h3>Business Survey Metadata</h3>
             <div class="field-container">
-                <label for="survey">Survey</label>
-                <input id="survey" name="survey" type="text" value="${surveyValue}" class="qa-survey">
+                <label for="eq_id">eq_id</label>
+                <input id="eq_id" name="eq_id" type="text" value="${eqIdValue}" class="qa-eq_id">
             </div>
             <div class="field-container">
-                <label for="form_type">Form Type</label>
+                <label for="form_type">form_type</label>
                 <input id="form_type" name="form_type" type="text" value="${formTypeValue}" class="qa-form_type">
-            </div>
-            <div class="field-container">
-                <label for="region_code">Region Code</label>
-                <input id="region_code" name="region_code" type="text" value="${regionCodeValue}" class="qa-region_code">
-            </div>
-            <div class="field-container">
-                <label for="channel">Channel</label>
-                <input id="channel" name="channel" type="text" value="RH" class="qa-channel">
             </div>
         `
     }
@@ -180,11 +148,11 @@
         document.getElementById("flush-btn").disabled = true;
 
         const schema_name = document.getElementById("schema_name").value
-        const is_census_test_schema = schema_name === "test_individual_response"
-        if (is_census_test_schema || schema_name.startsWith('census') || schema_name.startsWith('ccs')) {
-            includeCensusClaims(schema_name, is_census_test_schema)
+
+        if (schema_name.startsWith('test_')) {
+            clearBusinessClaims()
         } else {
-            clearCensusClaims()
+            includeBusinessClaims(schema_name)
         }
 
         var xhttp = new XMLHttpRequest();
