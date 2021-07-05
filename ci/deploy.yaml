@@ -7,9 +7,9 @@ image_resource:
 params:
   SERVICE_ACCOUNT_JSON: ((gcp.service_account_json))
   PROJECT_ID:
-  REGION: europe-west2
+  REGION:
   DOCKER_REGISTRY:
-  IMAGE_TAG: latest
+  IMAGE_TAG:
   RUNNER_URL:
   MIN_INSTANCES:
   MAX_INSTANCES:

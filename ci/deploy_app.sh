@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+IMAGE_TAG="${IMAGE_TAG:=latest}"
+REGION="${REGION:=europe-west2}"
+
 gcloud beta run deploy eq-questionnaire-launcher \
     --project="$PROJECT_ID" --region="$REGION" --concurrency=250 --min-instances="$MIN_INSTANCES" --max-instances="$MAX_INSTANCES" \
     --port=8000 --cpu=1 --memory=256M \
