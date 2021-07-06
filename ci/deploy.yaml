@@ -11,8 +11,8 @@ params:
   DOCKER_REGISTRY:
   IMAGE_TAG: latest
   RUNNER_URL:
-  MIN_INSTANCES:
-  MAX_INSTANCES:
+  MIN_INSTANCES: 1
+  MAX_INSTANCES: 1
 inputs:
   - name: eq-questionnaire-launcher
 run:
