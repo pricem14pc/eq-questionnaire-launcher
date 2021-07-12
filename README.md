@@ -54,33 +54,9 @@ Now run Go launcher and navigate to "http://localhost:8000/quick-launch?url=" pa
 e.g."http://localhost:8000/quick-launch?url=http://localhost:7777/1_0001.json"
 ```
 
-### Deployment with [Helm](https://helm.sh/)
+### Deploying
 
-To deploy this application with helm, you must have a kubernetes cluster already running and be logged into the cluster.
-
-Log in to the cluster using:
-```
-gcloud container clusters get-credentials survey-runner --region <region> --project <gcp_project_id>
-```
-
-You need to have Helm installed locally
-
-1. Install Helm with `brew install kubernetes-helm` and then run `helm init --client-only`
-
-1. Install Helm Tiller plugin for tillerless deploys `helm plugin install https://github.com/rimusz/helm-tiller`
-
----
-
-The following environment variables must be set when deploying the app.
-- RUNNER_URL
-- DOCKER_REGISTRY
-- IMAGE_TAG
-
-To deploy to a cluster you can run the following command
-
-```
-./k8s/deploy_app.sh
-```
+For deploying with Concourse see the [CI README](./ci/README.md).
 
 ### Notes
 * There are no unit tests yet
