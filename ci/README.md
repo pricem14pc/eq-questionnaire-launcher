@@ -19,7 +19,7 @@ The following are optional variables that can also be set if needed:
 - CPU
 - MEMORY
 
-	To deploy the app to the cluster via Concourse, use the following task command:
+To deploy the app to the cluster via Concourse, use the following task command:
 
 ```sh
 PROJECT_ID=<project_id> \
