@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+if [[ -z "$PROJECT_ID" ]]; then
+  echo "PROJECT_ID not provided"
+  exit 1
+fi
+
+if [[ -z "$RUNNER_URL" ]]; then
+  echo "RUNNER_URL not provided"
+  exit 1
+fi
+
 IMAGE_TAG="${IMAGE_TAG:=latest}"
 REGION="${REGION:=europe-west2}"
 CONCURRENCY="${CONCURRENCY=250}"
