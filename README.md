@@ -58,6 +58,33 @@ e.g."http://localhost:8000/quick-launch?url=http://localhost:7777/1_0001.json"
 
 For deploying with Concourse see the [CI README](./ci/README.md).
 
+### Deployment with [gcloud](https://cloud.google.com/sdk/gcloud)
+
+To deploy this application with gcloud, you must be logged in using `gcloud auth login` and `gcloud auth application-default login`.
+
+Make sure required [environmental variables](#environment-variables) are set.
+
+Then call the following command with environment variables set:
+```sh
+./ci/deploy_app.sh
+```
+## Environment Variables
+
+The following environment variables must be set when deploying the app:
+- PROJECT_ID
+- DOCKER_REGISTRY
+- RUNNER_URL
+
+The following are optional variables that can also be set if needed:
+- SERVICE_ACCOUNT_JSON
+- REGION
+- IMAGE_TAG
+- CONCURRENCY
+- MIN_INSTANCES
+- MAX_INSTANCES
+- CPU
+- MEMORY
+
 ### Notes
 * There are no unit tests yet
 * JWT spec based on http://ons-schema-definitions.readthedocs.io/en/latest/jwt_profile.html

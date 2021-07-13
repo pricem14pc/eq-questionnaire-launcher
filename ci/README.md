@@ -4,22 +4,9 @@ To deploy this application with Concourse, you must be logged in to a Concourse 
 
 ---
 
-The following environment variables must be set when deploying the app:
-- PROJECT_ID
-- DOCKER_REGISTRY
-- RUNNER_URL
+Make sure required environmental variables are set (for list of environmental variables check [README](./README.md)).
 
-The following are optional variables that can also be set if needed:
-- SERVICE_ACCOUNT_JSON
-- REGION
-- IMAGE_TAG
-- CONCURRENCY  
-- MIN_INSTANCES
-- MAX_INSTANCES
-- CPU
-- MEMORY
-
-	To deploy the app to the cluster via Concourse, use the following task command:
+To deploy the app via Concourse, use the following task command:
 
 ```sh
 PROJECT_ID=<project_id> \
