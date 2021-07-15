@@ -1,4 +1,0 @@
-apiVersion: v2
-description: A Helm chart for deploying Questionnaire Launcher to Kubernetes
-name: launcher
-version: 1.0.0

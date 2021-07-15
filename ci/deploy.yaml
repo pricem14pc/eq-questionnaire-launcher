@@ -2,15 +2,17 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: ((image_registry))/eq-app-deploy-image
-    tag: ((deploy_image_version))
+    repository: gcr.io/google.com/cloudsdktool/cloud-sdk
+    tag: slim
 params:
   SERVICE_ACCOUNT_JSON: ((gcp.service_account_json))
   PROJECT_ID:
-  REGION: europe-west2
+  REGION:
   DOCKER_REGISTRY:
-  IMAGE_TAG: latest
+  IMAGE_TAG:
   RUNNER_URL:
+  MIN_INSTANCES:
+  MAX_INSTANCES:
 inputs:
   - name: eq-questionnaire-launcher
 run:
@@ -24,7 +26,6 @@ run:
       EOL
 
       gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
-      gcloud container clusters get-credentials survey-runner --region ${REGION} --project ${PROJECT_ID}
 
       cd eq-questionnaire-launcher
-      ./k8s/deploy_app.sh
+      ./ci/deploy_app.sh
