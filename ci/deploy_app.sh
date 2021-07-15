@@ -11,6 +11,11 @@ if [[ -z "$RUNNER_URL" ]]; then
   exit 1
 fi
 
+if [[ -z "$DOCKER_REGISTRY" ]]; then
+  echo "DOCKER_REGISTRY not provided"
+  exit 1
+fi
+
 IMAGE_TAG="${IMAGE_TAG:=latest}"
 REGION="${REGION:=europe-west2}"
 CONCURRENCY="${CONCURRENCY=250}"
