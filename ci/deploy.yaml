@@ -15,6 +15,8 @@ params:
   MAX_INSTANCES:
 inputs:
   - name: eq-questionnaire-launcher
+  - name: image-tag
+    optional: true
 run:
   path: bash
   args:
