@@ -26,6 +26,9 @@ run:
       EOL
 
       gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
-
+      FILE=./image-tag/tag
+      if [[ -f "${FILE}" ]]; then
+        export IMAGE_TAG=`cat "$FILE"`
+      fi
       cd eq-questionnaire-launcher
       ./ci/deploy_app.sh
